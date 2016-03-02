@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -29,6 +31,23 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 @Path("/demorest")
 public class DemoRestService {
 
+	private static Map<Integer, Student> students;
+	
+	static {
+		students = new ConcurrentHashMap<>();
+		LocalDate ld = LocalDate.of(1960, 10, 10);
+		Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
+				.toInstant();
+		Date bday = Date.from(instant);
+		Student student = new Student("Jane", Student.Status.FULL_TIME,
+				new BigDecimal(1000), bday);
+		students.put(0, student);
+
+		student = new Student("Chung Lee", Student.Status.FULL_TIME,
+				new BigDecimal(1000), bday);
+		students.put(1, student);
+		
+	}
 
 	@GET
 	@Path("/{id}")
@@ -37,27 +56,22 @@ public class DemoRestService {
 	}
 
 	@GET
-	public String getStudent(@QueryParam("id") int id) {
+	public String getStudent(@QueryParam("id") Integer id) {
 		LocalDate ld = LocalDate.of(1960, 10, 10);
 		Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
 				.toInstant();
 		Date bday = Date.from(instant);
-		Student student = new Student("Jane", Student.Status.FULL_TIME,
-				new BigDecimal(1000), bday);
+		Student student = students.get(id);
+		if(student == null) {
+			return "Not Found";
+		}
 		return student.toString();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public String getStudentXml(@QueryParam("id") int id) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(2000, 10, 10);
-		LocalDate ld = LocalDate.of(1960, 10, 10);
-		Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
-				.toInstant();
-		Date bday = cal.getTime();
-		Student student = new Student("Jane", Student.Status.FULL_TIME,
-				new BigDecimal(1000), bday);
+		Student student = students.get(id);
 
 		XMLOutputFactory f = XMLOutputFactory.newInstance();
 		XMLStreamWriter writer = null;
@@ -88,14 +102,7 @@ public class DemoRestService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getStudentJson(@QueryParam("id") int id) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(2000, 10, 10);
-		LocalDate ld = LocalDate.of(1960, 10, 10);
-		Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
-				.toInstant();
-		Date bday = cal.getTime();
-		Student student = new Student("Jane", Student.Status.FULL_TIME,
-				new BigDecimal(1000), bday);
+		Student student = students.get(id);
 		//Create the Mapper
 		ObjectMapper mapper = new ObjectMapper();
 		//Configure mapper
