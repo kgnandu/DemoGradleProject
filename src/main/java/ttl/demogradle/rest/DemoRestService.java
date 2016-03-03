@@ -62,10 +62,12 @@ public class DemoRestService {
 				.toInstant();
 		Date bday = Date.from(instant);
 
-		Date date2 = bday;
+		//Removed all of this
+		/*
 		for(int i = 0; i < bday.getTime(); i++) {
 			date2 = new Date();
 		}
+		*/
 
 		//Here we are going to do something completely
 		//different
