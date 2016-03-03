@@ -162,4 +162,8 @@ public class DemoRestService {
 		
 		return sw.toString();
 	}	
+	
+	public void junkforGitPlay() {
+		
+	}
 }
