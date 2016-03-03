@@ -39,13 +39,13 @@ public class DemoRestService {
 		Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
 				.toInstant();
 		Date bday = Date.from(instant);
-		Student student = new Student("Jane", Student.Status.FULL_TIME,
+		Student stu = new Student("Jane", Student.Status.FULL_TIME,
 				new BigDecimal(1000), bday);
-		students.put(0, student);
+		students.put(0, stu);
 
-		student = new Student("Chung Lee", Student.Status.FULL_TIME,
+		stu = new Student("Chung Lee", Student.Status.FULL_TIME,
 				new BigDecimal(1000), bday);
-		students.put(1, student);
+		students.put(1, stu);
 		
 	}
 
