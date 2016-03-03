@@ -76,15 +76,14 @@ public class DemoRestService {
 
 		//Here we are going to do something completely
 		//different
-		Calendar cal = Calendar.getInstance();
 		Calendar cal2 = Calendar.getInstance();
-		cal.setTime(bday);
 		cal2.add(Calendar.MONTH, 1);
 		
 
 		Student student = students.get(id);
 		if(student == null) {
-			return "Not Found";
+			int x = 2;
+			return "Maybe Not Found";
 		}
 		return student.toString();
 	}
