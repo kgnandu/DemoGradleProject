@@ -61,6 +61,12 @@ public class DemoRestService {
 		Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
 				.toInstant();
 		Date bday = Date.from(instant);
+		//Here we are going to do something completely
+		//different
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(bday);
+		cal.add(Calendar.MONTH, 1);
+
 		Student student = students.get(id);
 		if(student == null) {
 			return "Not Found";
