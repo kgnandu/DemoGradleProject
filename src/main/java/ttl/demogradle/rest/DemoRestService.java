@@ -66,14 +66,20 @@ public class DemoRestService {
 		/*
 		for(int i = 0; i < bday.getTime(); i++) {
 			date2 = new Date();
+		//Here we are going to do something completely
+		//different
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(bday);
+		cal.add(Calendar.MONTH, 1);
 		}
 		*/
 
 		//Here we are going to do something completely
 		//different
 		Calendar cal = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
 		cal.setTime(bday);
-		cal.add(Calendar.MONTH, 1);
+		cal2.add(Calendar.MONTH, 1);
 		
 
 		Student student = students.get(id);
