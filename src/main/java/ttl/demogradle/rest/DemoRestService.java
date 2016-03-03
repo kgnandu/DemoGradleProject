@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class DemoRestService {
 
 	private static Map<Integer, Student> students;
-	
+
 	static {
 		students = new ConcurrentHashMap<>();
 		LocalDate ld = LocalDate.of(1960, 10, 10);
@@ -46,7 +46,7 @@ public class DemoRestService {
 		student = new Student("Chung Lee", Student.Status.FULL_TIME,
 				new BigDecimal(1000), bday);
 		students.put(1, student);
-		
+
 	}
 
 	@GET
@@ -62,28 +62,27 @@ public class DemoRestService {
 				.toInstant();
 		Date bday = Date.from(instant);
 
-		//Removed all of this
-		/*
-		for(int i = 0; i < bday.getTime(); i++) {
-			date2 = new Date();
-		//Here we are going to do something completely
-		//different
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(bday);
-		cal.add(Calendar.MONTH, 1);
+		// Removed all of this
+		for (int i = 0; i < bday.getTime(); i++) {
+			Date date2 = new Date();
+			// Here we are going to do something completely
+			// different
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(bday);
+			cal.add(Calendar.MONTH, 1);
 		}
-		*/
 
-		//Here we are going to do something completely
-		//different
+		// Here we are going to do something completely
+		// different
 		Calendar cal = Calendar.getInstance();
 		Calendar cal2 = Calendar.getInstance();
-		cal.setTime(bday);
 		cal2.add(Calendar.MONTH, 1);
 		
+		int i = 10;
+		double j = Math.sin(i);
 
 		Student student = students.get(id);
-		if(student == null) {
+		if (student == null) {
 			return "Not Found";
 		}
 		return student.toString();
@@ -102,21 +101,20 @@ public class DemoRestService {
 			writer = f.createXMLStreamWriter(sw);
 
 			writeToXml(student, writer);
-			
+
 			result = (sw.toString());
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(writer != null) {
+			if (writer != null) {
 				try {
 					writer.close();
-				}
-				catch(Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -124,18 +122,17 @@ public class DemoRestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getStudentJson(@QueryParam("id") int id) {
 		Student student = students.get(id);
-		//Create the Mapper
+		// Create the Mapper
 		ObjectMapper mapper = new ObjectMapper();
-		//Configure mapper
+		// Configure mapper
 		mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 		SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-dd-MM");
 		mapper.setDateFormat(outputFormat);
 
 		String stJson = null;
 		try {
-			stJson = studentToJson(student,  mapper);
-		}
-		catch(Exception e) {
+			stJson = studentToJson(student, mapper);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return stJson;
@@ -173,15 +170,15 @@ public class DemoRestService {
 		writer.writeEndDocument();
 
 	}
-	
+
 	public String studentToJson(Student student, ObjectMapper mapper)
 			throws JsonParseException, JsonMappingException, IOException {
-		
+
 		StringWriter sw = new StringWriter();
-		//Convert
+		// Convert
 		mapper.writeValue(sw, student);
-		
+
 		return sw.toString();
-	}	
-	
+	}
+
 }
