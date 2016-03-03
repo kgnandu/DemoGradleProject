@@ -39,13 +39,13 @@ public class DemoRestService {
 		Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
 				.toInstant();
 		Date bday = Date.from(instant);
-		Student stu = new Student("Jane", Student.Status.FULL_TIME,
+		Student student = new Student("Jane", Student.Status.FULL_TIME,
 				new BigDecimal(1000), bday);
-		students.put(0, stu);
+		students.put(0, student);
 
-		stu = new Student("Chung Lee", Student.Status.FULL_TIME,
+		student = new Student("Chung Lee", Student.Status.FULL_TIME,
 				new BigDecimal(1000), bday);
-		students.put(1, stu);
+		students.put(1, student);
 		
 	}
 
@@ -61,11 +61,18 @@ public class DemoRestService {
 		Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault())
 				.toInstant();
 		Date bday = Date.from(instant);
+
+		Date date2 = bday;
+		for(int i = 0; i < bday.getTime(); i++) {
+			date2 = new Date();
+		}
+
 		//Here we are going to do something completely
 		//different
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(bday);
 		cal.add(Calendar.MONTH, 1);
+		
 
 		Student student = students.get(id);
 		if(student == null) {
